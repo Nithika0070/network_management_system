@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Page</title>
+    <style>
+        body {
+            background-color: #f0f4f8;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+        }
+        h1 {
+            color: #333;
+            font-size: 3em;
+        }
+        a {
+            color: #555;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome again <span th:text="${userLogin}"></span></h1>
+</body>
+</html>

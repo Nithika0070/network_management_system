@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register Form</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(120deg, #89f7fe, #66a6ff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+    }
+
+    .register-container {
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 14px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .register-container h2 {
+      margin-bottom: 24px;
+      color: #222;
+      font-size: 26px;
+      text-align: center;
+    }
+
+    .register-container input[type="text"],
+    .register-container input[type="email"],
+    .register-container input[type="password"] {
+      width: 100%;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      background-color: #f8f8f8;
+      transition: border-color 0.3s;
+    }
+
+    .register-container input:focus {
+      border-color: #66a6ff;
+      outline: none;
+      box-shadow: 0 0 6px rgba(102, 166, 255, 0.4);
+    }
+
+    .register-container input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #66a6ff;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .register-container input[type="submit"]:hover {
+      background-color: #4b8ad1;
+    }
+
+    .register-container a {
+      margin-top: 12px;
+      text-align: center;
+      color: #555;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .register-container a:hover {
+      text-decoration: underline;
+      color: #333;
+    }
+  </style>
+<body>
+  <div class="register-container">
+    <h2>Create an Account</h2>
+    <form method="post" action="/netconf/register" th:object="${registerRequest}">
+		<!--make sure to set the name same as that of the attributes present there-->
+      <input type="text" placeholder="Username" name="login" required />
+      <input type="email" placeholder="Email" name="email" required />
+      <input type="password" placeholder="Password" name="password" required />
+      <input type="submit" value="Register" />
+    </form>
+    <a href="/">← Back to Home</a>
+  </div>
+</body>
+</html>

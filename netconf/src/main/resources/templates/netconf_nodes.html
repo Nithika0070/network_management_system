@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Netconf Devices</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(to right, #dfe9f3, #ffffff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 10px;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #4f9cf3;
+    }
+
+    .card p {
+      margin: 6px 0;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .status-online {
+      color: green;
+      font-weight: bold;
+    }
+
+    .status-offline {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Connected Netconf Devices</h1>
+  <div class="grid">
+    <div class="card" th:each="node : ${nodes}">
+      <h3 th:text="${node.nodeId}">Node ID</h3>
+      <p>Host: <span th:text="${node.host}">192.168.x.x</span></p>
+      <p>Port: <span th:text="${node.port}">830</span></p>
+      <p>Session ID: <span th:text="${node.sessionId}">123</span></p>
+      <p>Keepalive Delay: <span th:text="${node.keepaliveDelay}">0</span></p>
+      <p>TCP Only: <span th:text="${node.tcpOnly} ? 'Yes' : 'No'">Yes</span></p>
+      <p>
+        Status: 
+        <span th:text="${node.connectionStatus}" 
+              th:classappend="${node.connectionStatus == 'connected'} ? 'status-online' : 'status-offline'">
+        </span>
+      </p>
+
+	    <!-- 🔴 Delete Single Node Form -->
+	    <form th:action="@{'/netconf/node/' + ${node.nodeId}}" method="post" style="margin-top: 12px;">
+	      <input type="hidden" name="_method" value="delete"/>
+	      <button type="submit" style="
+	        background-color: #e74c3c;
+	        color: #fff;
+	        border: none;
+	        padding: 8px 16px;
+	        border-radius: 6px;
+	        cursor: pointer;
+	        font-size: 14px;
+	        transition: background-color 0.3s;
+	      ">🗑 Delete Node</button>
+	    </form>
+	  </div>
+    </div>
+  </div>
+  <div style="text-align: center; margin-top: 40px;">
+    <a href="/netconf/provision">
+      <button style="
+        padding: 12px 20px;
+        font-size: 16px;
+        background-color: #4f9cf3;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      ">
+         Provision New Device
+      </button>
+    </a>
+	<form action="/netconf/node" method="post" style="margin-top: 12px; text-align: center;">
+		    <input type="hidden" name="_method" value="delete"/>
+		    <button type="submit" style="
+		      padding: 12px 20px;
+		      font-size: 16px;
+		      background-color: #e74c3c;
+		      color: #fff;
+		      border: none;
+		      border-radius: 8px;
+		      cursor: pointer;
+		      transition: background-color 0.3s ease;
+		    ">
+		       Delete All Devices
+		    </button>
+		</form>
+  </div>
+</body>
+</html>
